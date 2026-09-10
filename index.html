@@ -1,0 +1,2387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>THE CODER GIRL | Interactive Learning Hub</title>
+
+<style>
+:root{
+  --purple:#9b5cff;
+  --purple2:#c084fc;
+  --green:#39ff88;
+  --green2:#16c784;
+  --black:#07070b;
+  --panel:#101017;
+  --panel2:#161620;
+  --text:#f7f4ff;
+  --muted:#a9a5b8;
+  --red:#ff5577;
+  --yellow:#ffd166;
+  --border:rgba(155,92,255,.25);
+  --shadow:0 15px 45px rgba(0,0,0,.35);
+}
+
+*{box-sizing:border-box}
+
+html{scroll-behavior:smooth}
+
+body{
+  margin:0;
+  font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  background:
+    radial-gradient(circle at 10% 10%,rgba(155,92,255,.18),transparent 28%),
+    radial-gradient(circle at 90% 80%,rgba(57,255,136,.10),transparent 25%),
+    var(--black);
+  color:var(--text);
+}
+
+button,input,textarea,select{font:inherit}
+
+button{
+  cursor:pointer;
+  border:0;
+}
+
+.app{
+  min-height:100vh;
+  display:grid;
+  grid-template-columns:250px 1fr;
+}
+
+/* SIDEBAR */
+.sidebar{
+  position:fixed;
+  width:250px;
+  height:100vh;
+  overflow:auto;
+  padding:25px 18px;
+  background:rgba(9,9,14,.96);
+  border-right:1px solid var(--border);
+  z-index:20;
+}
+
+.logo{
+  font-family:cursive;
+  font-size:28px;
+  font-weight:900;
+  letter-spacing:2px;
+  color:white;
+  text-shadow:
+    0 0 8px var(--purple),
+    0 0 20px rgba(155,92,255,.55);
+  margin:0 0 7px;
+}
+
+.logo span{color:var(--green)}
+
+.tagline{
+  color:var(--muted);
+  font-size:11px;
+  margin-bottom:28px;
+  letter-spacing:1px;
+}
+
+.nav-title{
+  color:#6f6b7d;
+  text-transform:uppercase;
+  font-size:10px;
+  letter-spacing:1.5px;
+  margin:18px 10px 8px;
+}
+
+.nav button{
+  width:100%;
+  background:transparent;
+  color:#bdb8ca;
+  text-align:left;
+  padding:12px;
+  margin:3px 0;
+  border-radius:12px;
+  transition:.2s;
+}
+
+.nav button:hover,
+.nav button.active{
+  color:white;
+  background:linear-gradient(90deg,rgba(155,92,255,.2),rgba(57,255,136,.05));
+  box-shadow:inset 3px 0 var(--purple);
+}
+
+.streak-mini{
+  margin-top:25px;
+  padding:14px;
+  border:1px solid rgba(57,255,136,.22);
+  background:rgba(57,255,136,.05);
+  border-radius:15px;
+}
+
+.streak-mini strong{
+  display:block;
+  color:var(--green);
+  font-size:22px;
+}
+
+.streak-mini small{color:var(--muted)}
+
+/* MAIN */
+.main{
+  grid-column:2;
+  padding:25px;
+  max-width:1600px;
+  width:100%;
+  margin:auto;
+}
+
+.topbar{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:15px;
+  margin-bottom:25px;
+}
+
+.mobile-menu{
+  display:none;
+}
+
+.welcome h1{
+  margin:0;
+  font-size:clamp(26px,4vw,42px);
+}
+
+.welcome p{
+  margin:5px 0 0;
+  color:var(--muted);
+}
+
+.profile{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+
+.level{
+  padding:8px 13px;
+  border-radius:20px;
+  background:rgba(155,92,255,.12);
+  border:1px solid var(--border);
+  color:var(--purple2);
+  font-weight:700;
+}
+
+.avatar{
+  width:43px;
+  height:43px;
+  border-radius:50%;
+  display:grid;
+  place-items:center;
+  background:linear-gradient(135deg,var(--purple),var(--green));
+  color:#050505;
+  font-weight:900;
+}
+
+/* HERO */
+.hero{
+  position:relative;
+  overflow:hidden;
+  padding:28px;
+  border-radius:25px;
+  background:
+    linear-gradient(135deg,rgba(155,92,255,.20),rgba(57,255,136,.06)),
+    var(--panel);
+  border:1px solid rgba(155,92,255,.35);
+  box-shadow:var(--shadow);
+}
+
+.hero:after{
+  content:"";
+  position:absolute;
+  width:250px;
+  height:250px;
+  right:-100px;
+  top:-120px;
+  background:var(--purple);
+  filter:blur(100px);
+  opacity:.25;
+}
+
+.hero-content{position:relative;z-index:1}
+
+.eyebrow{
+  color:var(--green);
+  font-weight:800;
+  font-size:12px;
+  letter-spacing:2px;
+  text-transform:uppercase;
+}
+
+.hero h2{
+  margin:8px 0;
+  font-size:clamp(25px,4vw,40px);
+}
+
+.hero p{
+  max-width:720px;
+  color:var(--muted);
+  line-height:1.6;
+}
+
+.btn{
+  padding:11px 17px;
+  border-radius:11px;
+  font-weight:800;
+  color:white;
+  background:linear-gradient(135deg,var(--purple),#7137d9);
+  transition:.2s;
+}
+
+.btn:hover{
+  transform:translateY(-2px);
+  box-shadow:0 8px 25px rgba(155,92,255,.25);
+}
+
+.btn.green{
+  color:#031007;
+  background:linear-gradient(135deg,var(--green),#16c784);
+}
+
+.btn.dark{
+  background:#1c1c26;
+  border:1px solid #292936;
+}
+
+/* STATS */
+.stats{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:15px;
+  margin:20px 0;
+}
+
+.stat{
+  padding:18px;
+  background:var(--panel);
+  border:1px solid var(--border);
+  border-radius:18px;
+  position:relative;
+}
+
+.stat:before,
+.card:before{
+  content:"";
+  position:absolute;
+  left:0;
+  top:0;
+  height:3px;
+  width:100%;
+  background:linear-gradient(90deg,var(--purple),var(--green),var(--purple));
+  opacity:.8;
+}
+
+.stat span{
+  display:block;
+  color:var(--muted);
+  font-size:12px;
+}
+
+.stat strong{
+  display:block;
+  font-size:28px;
+  margin-top:5px;
+}
+
+/* SECTION */
+.section{
+  margin-top:30px;
+}
+
+.section-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:14px;
+}
+
+.section-head h2{margin:0}
+
+.section-head p{
+  color:var(--muted);
+  margin:4px 0 0;
+}
+
+/* CARDS */
+.grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:16px;
+}
+
+.card{
+  position:relative;
+  padding:21px;
+  border-radius:18px;
+  background:var(--panel);
+  border:1px solid var(--border);
+  overflow:hidden;
+  transition:.2s;
+}
+
+.card:hover{
+  transform:translateY(-3px);
+  border-color:rgba(155,92,255,.6);
+}
+
+.card-icon{
+  width:45px;
+  height:45px;
+  display:grid;
+  place-items:center;
+  border-radius:13px;
+  background:rgba(155,92,255,.13);
+  font-size:21px;
+  margin-bottom:13px;
+}
+
+.card h3{margin:5px 0}
+
+.card p{
+  color:var(--muted);
+  font-size:14px;
+  line-height:1.5;
+}
+
+.card-footer{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+  margin-top:18px;
+}
+
+.progress{
+  height:7px;
+  border-radius:20px;
+  background:#22222d;
+  overflow:hidden;
+  flex:1;
+}
+
+.progress div{
+  height:100%;
+  background:linear-gradient(90deg,var(--purple),var(--green));
+  border-radius:20px;
+}
+
+.badge{
+  font-size:11px;
+  padding:5px 8px;
+  border-radius:8px;
+  background:rgba(57,255,136,.1);
+  color:var(--green);
+}
+
+/* LESSON */
+.lesson-layout{
+  display:grid;
+  grid-template-columns:300px 1fr;
+  gap:18px;
+}
+
+.lesson-list{
+  background:var(--panel);
+  border:1px solid var(--border);
+  border-radius:18px;
+  padding:12px;
+  height:max-content;
+}
+
+.lesson-item{
+  padding:13px;
+  border-radius:12px;
+  cursor:pointer;
+  margin:4px 0;
+}
+
+.lesson-item:hover,
+.lesson-item.active{
+  background:rgba(155,92,255,.13);
+}
+
+.lesson-item small{
+  color:var(--muted);
+  display:block;
+  margin-top:3px;
+}
+
+.lesson-content{
+  background:var(--panel);
+  border:1px solid var(--border);
+  border-radius:18px;
+  padding:25px;
+}
+
+.lesson-content h2{margin-top:0}
+
+.lesson-text{
+  color:#d5d0df;
+  line-height:1.7;
+}
+
+.code-box{
+  margin:18px 0;
+  border:1px solid #2b2b37;
+  border-radius:15px;
+  overflow:hidden;
+}
+
+.code-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  background:#191921;
+  padding:10px 13px;
+  color:#aaa5b5;
+  font-size:12px;
+}
+
+pre{
+  margin:0;
+  padding:16px;
+  overflow:auto;
+  background:#0b0b10;
+  color:#d9d1ff;
+}
+
+/* PLAYGROUND */
+.playground{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:15px;
+}
+
+.editors{
+  display:grid;
+  gap:10px;
+}
+
+.editor{
+  border:1px solid #2b2b38;
+  border-radius:13px;
+  overflow:hidden;
+  background:#09090d;
+}
+
+.editor label{
+  display:block;
+  padding:8px 12px;
+  background:#15151d;
+  color:var(--purple2);
+  font-size:11px;
+  font-weight:800;
+}
+
+.editor textarea{
+  width:100%;
+  min-height:130px;
+  resize:vertical;
+  border:0;
+  outline:0;
+  background:#09090d;
+  color:#e7e1ff;
+  padding:12px;
+  font-family:"Fira Code",monospace;
+  font-size:13px;
+}
+
+.preview{
+  min-height:450px;
+  background:white;
+  border-radius:13px;
+  overflow:hidden;
+  border:2px solid rgba(57,255,136,.25);
+}
+
+.preview iframe{
+  width:100%;
+  height:100%;
+  min-height:450px;
+  border:0;
+}
+
+/* CHALLENGE */
+.challenge{
+  border:1px solid rgba(57,255,136,.2);
+  background:rgba(57,255,136,.04);
+  padding:20px;
+  border-radius:16px;
+}
+
+.challenge h3{margin-top:0}
+
+.challenge textarea{
+  width:100%;
+  min-height:130px;
+  padding:13px;
+  background:#08080d;
+  color:white;
+  border:1px solid #30303d;
+  border-radius:12px;
+  resize:vertical;
+  outline:none;
+}
+
+.feedback{
+  padding:12px;
+  border-radius:10px;
+  margin-top:12px;
+  display:none;
+}
+
+.feedback.success{
+  display:block;
+  background:rgba(57,255,136,.1);
+  color:var(--green);
+}
+
+.feedback.error{
+  display:block;
+  background:rgba(255,85,119,.1);
+  color:#ff91a6;
+}
+
+.hints{
+  margin-top:12px;
+}
+
+.hint{
+  color:var(--yellow);
+  background:rgba(255,209,102,.08);
+  border-left:3px solid var(--yellow);
+  padding:10px;
+  margin-top:7px;
+  border-radius:6px;
+}
+
+/* QUIZ */
+.quiz-option{
+  width:100%;
+  text-align:left;
+  padding:14px;
+  margin:7px 0;
+  background:#181821;
+  color:#ddd9e7;
+  border:1px solid #2a2a35;
+  border-radius:10px;
+}
+
+.quiz-option:hover{
+  border-color:var(--purple);
+}
+
+.quiz-option.correct{
+  border-color:var(--green);
+  background:rgba(57,255,136,.1);
+}
+
+.quiz-option.wrong{
+  border-color:var(--red);
+  background:rgba(255,85,119,.1);
+}
+
+.explanation{
+  color:var(--muted);
+  margin-top:12px;
+}
+
+/* PROJECTS */
+.project-card{
+  display:flex;
+  flex-direction:column;
+}
+
+.project-card.locked{
+  opacity:.5;
+}
+
+.project-card .project-body{flex:1}
+
+/* BADGES */
+.badges{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:13px;
+}
+
+.achievement{
+  text-align:center;
+  padding:18px 10px;
+  background:var(--panel);
+  border:1px solid var(--border);
+  border-radius:15px;
+}
+
+.achievement .emoji{
+  font-size:32px;
+  filter:grayscale(1);
+  opacity:.35;
+}
+
+.achievement.unlocked .emoji{
+  filter:none;
+  opacity:1;
+}
+
+.achievement small{
+  color:var(--muted);
+  display:block;
+  margin-top:7px;
+}
+
+/* MODAL */
+.modal{
+  display:none;
+  position:fixed;
+  inset:0;
+  z-index:100;
+  background:rgba(0,0,0,.72);
+  backdrop-filter:blur(5px);
+  place-items:center;
+  padding:20px;
+}
+
+.modal.show{display:grid}
+
+.modal-box{
+  width:min(650px,100%);
+  max-height:90vh;
+  overflow:auto;
+  background:#111118;
+  border:1px solid var(--border);
+  border-radius:20px;
+  padding:22px;
+  box-shadow:var(--shadow);
+}
+
+.modal-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.close{
+  background:#252531;
+  color:white;
+  width:35px;
+  height:35px;
+  border-radius:50%;
+}
+
+.menu{
+  position:fixed;
+  display:none;
+  z-index:200;
+  width:220px;
+  background:#171720;
+  border:1px solid var(--border);
+  border-radius:13px;
+  padding:7px;
+  box-shadow:var(--shadow);
+}
+
+.menu.show{display:block}
+
+.menu button{
+  width:100%;
+  padding:11px;
+  background:transparent;
+  color:#ddd8e9;
+  text-align:left;
+  border-radius:8px;
+}
+
+.menu button:hover{
+  background:rgba(155,92,255,.15);
+}
+
+/* TOAST */
+.toast{
+  position:fixed;
+  right:20px;
+  bottom:20px;
+  z-index:300;
+  padding:13px 17px;
+  border-radius:12px;
+  background:#191922;
+  border:1px solid var(--border);
+  box-shadow:var(--shadow);
+  transform:translateY(100px);
+  opacity:0;
+  transition:.3s;
+}
+
+.toast.show{
+  transform:translateY(0);
+  opacity:1;
+}
+
+/* MOBILE */
+@media(max-width:1000px){
+  .grid{grid-template-columns:repeat(2,1fr)}
+  .stats{grid-template-columns:repeat(2,1fr)}
+  .badges{grid-template-columns:repeat(2,1fr)}
+}
+
+@media(max-width:760px){
+  .app{display:block}
+
+  .sidebar{
+    transform:translateX(-100%);
+    transition:.3s;
+  }
+
+  .sidebar.open{transform:translateX(0)}
+
+  .main{
+    padding:18px;
+  }
+
+  .mobile-menu{
+    display:block;
+    background:#181821;
+    color:white;
+    width:40px;
+    height:40px;
+    border-radius:10px;
+  }
+
+  .topbar{
+    align-items:flex-start;
+  }
+
+  .profile .level{display:none}
+
+  .grid,
+  .lesson-layout,
+  .playground{
+    grid-template-columns:1fr;
+  }
+
+  .stats{
+    grid-template-columns:1fr 1fr;
+  }
+
+  .hero{padding:22px}
+}
+
+@media(max-width:500px){
+  .stats{grid-template-columns:1fr}
+  .badges{grid-template-columns:1fr 1fr}
+}
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+<!-- SIDEBAR -->
+<aside class="sidebar" id="sidebar">
+
+  <div class="logo">THE CODER <span>GIRL</span></div>
+  <div class="tagline">LEARN • CODE • CREATE</div>
+
+  <nav class="nav">
+    <div class="nav-title">Workspace</div>
+    <button class="active" onclick="showSection('dashboard',this)">🏠 Dashboard</button>
+    <button onclick="showSection('lessons',this)">📚 Lessons</button>
+    <button onclick="showSection('playground',this)">💻 Playground</button>
+    <button onclick="showSection('challenges',this)">🎯 Challenges</button>
+    <button onclick="showSection('projects',this)">🚀 Projects</button>
+
+    <div class="nav-title">Progress</div>
+    <button onclick="showSection('achievements',this)">🏆 Achievements</button>
+    <button onclick="showSection('bookmarks',this)">🔖 Bookmarks</button>
+  </nav>
+
+  <div class="streak-mini">
+    🔥 <strong id="sideStreak">0 days</strong>
+    <small>Keep your learning streak alive!</small>
+  </div>
+
+</aside>
+
+<!-- MAIN -->
+<main class="main">
+
+<header class="topbar">
+  <button class="mobile-menu" onclick="toggleSidebar()">☰</button>
+
+  <div class="welcome">
+    <h1>Hey, Coder Girl! 👩‍💻</h1>
+    <p>Build something amazing today.</p>
+  </div>
+
+  <div class="profile">
+    <div class="level" id="levelDisplay">LEVEL 1</div>
+    <div class="avatar">CG</div>
+  </div>
+</header>
+
+<!-- DASHBOARD -->
+<section id="dashboard" class="page">
+
+  <div class="hero">
+    <div class="hero-content">
+      <div class="eyebrow">YOUR NEXT STEP</div>
+      <h2 id="nextTitle">Start your coding journey 🚀</h2>
+      <p id="nextDescription">
+        Learn HTML fundamentals and create your first webpage.
+      </p>
+      <button class="btn green" onclick="continueLearning()">Continue Learning →</button>
+    </div>
+  </div>
+
+  <div class="stats">
+    <div class="stat">
+      <span>⭐ Total XP</span>
+      <strong id="xpStat">0</strong>
+    </div>
+
+    <div class="stat">
+      <span>📚 Lessons</span>
+      <strong id="lessonStat">0%</strong>
+    </div>
+
+    <div class="stat">
+      <span>🔥 Streak</span>
+      <strong id="streakStat">0</strong>
+    </div>
+
+    <div class="stat">
+      <span>🏆 Badges</span>
+      <strong id="badgeStat">0</strong>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-head">
+      <div>
+        <h2>Learning Paths</h2>
+        <p>Short lessons designed for practical learning.</p>
+      </div>
+    </div>
+
+    <div class="grid" id="pathGrid"></div>
+  </div>
+
+  <div class="section">
+    <div class="section-head">
+      <div>
+        <h2>Quick Challenge</h2>
+        <p>Practice before you leave.</p>
+      </div>
+    </div>
+
+    <div class="challenge">
+      <h3>🎯 Make the heading green</h3>
+      <p>
+        Write CSS that changes an element with the class
+        <code>.title</code> to green.
+      </p>
+
+      <textarea id="quickChallenge"
+        placeholder="Write your CSS here..."></textarea>
+
+      <br><br>
+
+      <button class="btn green" onclick="checkQuickChallenge()">
+        Check Answer
+      </button>
+
+      <div id="quickFeedback" class="feedback"></div>
+
+      <div class="hints">
+        <button class="btn dark" onclick="showHint(1)">
+          💡 Hint
+        </button>
+        <div id="hint1"></div>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<!-- LESSONS -->
+<section id="lessons" class="page" style="display:none">
+
+  <div class="section-head">
+    <div>
+      <h2>Interactive Lessons 📚</h2>
+      <p>Learn one concept, then immediately practice it.</p>
+    </div>
+  </div>
+
+  <div class="lesson-layout">
+
+    <div class="lesson-list" id="lessonList"></div>
+
+    <article class="lesson-content">
+      <div class="eyebrow" id="lessonCategory">HTML</div>
+      <h2 id="lessonTitle">HTML Basics</h2>
+      <div class="lesson-text" id="lessonText"></div>
+
+      <div class="code-box">
+        <div class="code-header">
+          <span>Example</span>
+          <button class="btn dark" onclick="copyLessonCode()">Copy</button>
+        </div>
+        <pre id="lessonCode"></pre>
+      </div>
+
+      <button class="btn green" onclick="completeCurrentLesson()">
+        ✓ Mark Lesson Complete +25 XP
+      </button>
+
+      <button class="btn dark" onclick="bookmarkCurrentLesson()">
+        🔖 Bookmark
+      </button>
+
+      <button class="btn dark" onclick="openNotes()">
+        📝 Notes
+      </button>
+    </article>
+
+  </div>
+
+</section>
+
+<!-- PLAYGROUND -->
+<section id="playground" class="page" style="display:none">
+
+  <div class="section-head">
+    <div>
+      <h2>Live Code Playground 💻</h2>
+      <p>Experiment freely. Your code runs inside a safe preview frame.</p>
+    </div>
+
+    <div>
+      <button class="btn green" onclick="runCode()">▶ Run</button>
+      <button class="btn dark" onclick="resetPlayground()">↻ Reset</button>
+    </div>
+  </div>
+
+  <div class="playground">
+
+    <div class="editors">
+
+      <div class="editor">
+        <label>HTML</label>
+        <textarea id="htmlCode"><div class="card">
+  <h1>Hello Coder Girl!</h1>
+  <p>I am learning to code.</p>
+  <button>Click Me</button>
+</div></textarea>
+      </div>
+
+      <div class="editor">
+        <label>CSS</label>
+        <textarea id="cssCode">body {
+  font-family: Arial;
+  background: #08080d;
+  color: white;
+  padding: 30px;
+}
+
+.card {
+  border: 2px solid #9b5cff;
+  padding: 25px;
+  border-radius: 20px;
+}
+
+button {
+  background: #39ff88;
+  border: 0;
+  padding: 10px 16px;
+  border-radius: 8px;
+}</textarea>
+      </div>
+
+      <div class="editor">
+        <label>JavaScript</label>
+        <textarea id="jsCode">document.querySelector("button")
+  .addEventListener("click", () => {
+    alert("You did it! 🚀");
+  });</textarea>
+      </div>
+
+    </div>
+
+    <div class="preview">
+      <iframe id="preview" sandbox="allow-scripts"></iframe>
+    </div>
+
+  </div>
+
+</section>
+
+<!-- CHALLENGES -->
+<section id="challenges" class="page" style="display:none">
+
+  <div class="section-head">
+    <div>
+      <h2>Coding Challenges 🎯</h2>
+      <p>Use what you learned without copying the answer.</p>
+    </div>
+  </div>
+
+  <div class="grid" id="challengeGrid"></div>
+
+</section>
+
+<!-- PROJECTS -->
+<section id="projects" class="page" style="display:none">
+
+  <div class="section-head">
+    <div>
+      <h2>Mini Projects 🚀</h2>
+      <p>Build real things and unlock harder projects.</p>
+    </div>
+  </div>
+
+  <div class="grid" id="projectGrid"></div>
+
+</section>
+
+<!-- ACHIEVEMENTS -->
+<section id="achievements" class="page" style="display:none">
+
+  <div class="section-head">
+    <div>
+      <h2>Achievements 🏆</h2>
+      <p>Your coding milestones.</p>
+    </div>
+  </div>
+
+  <div class="badges" id="badgesGrid"></div>
+
+</section>
+
+<!-- BOOKMARKS -->
+<section id="bookmarks" class="page" style="display:none">
+
+  <div class="section-head">
+    <div>
+      <h2>Saved Lessons 🔖</h2>
+      <p>Come back to concepts you want to review.</p>
+    </div>
+  </div>
+
+  <div class="grid" id="bookmarkGrid"></div>
+
+</section>
+
+</main>
+</div>
+
+<!-- THREE DOT MENU -->
+<div class="menu" id="featureMenu">
+  <button onclick="openNotes()">📝 Lesson Notes</button>
+  <button onclick="bookmarkCurrentLesson()">🔖 Bookmark Lesson</button>
+  <button onclick="restartLesson()">↻ Restart Lesson</button>
+  <button onclick="showToast('Lesson issue reporting will be available soon.')">⚠ Report an issue</button>
+  <button onclick="showToast('Great job! Keep coding 🚀')">💜 Send encouragement</button>
+</div>
+
+<!-- NOTES MODAL -->
+<div class="modal" id="notesModal">
+  <div class="modal-box">
+    <div class="modal-head">
+      <h2>📝 My Notes</h2>
+      <button class="close" onclick="closeModal('notesModal')">×</button>
+    </div>
+
+    <p style="color:var(--muted)">
+      Save your personal notes for the current lesson.
+    </p>
+
+    <textarea
+      id="notesArea"
+      style="width:100%;min-height:250px;background:#09090d;color:white;border:1px solid #333;padding:15px;border-radius:12px"
+      placeholder="Write your notes here..."
+    ></textarea>
+
+    <br><br>
+
+    <button class="btn green" onclick="saveNotes()">Save Notes</button>
+  </div>
+</div>
+
+<!-- QUIZ MODAL -->
+<div class="modal" id="quizModal">
+  <div class="modal-box">
+    <div class="modal-head">
+      <h2>🧠 Quick Quiz</h2>
+      <button class="close" onclick="closeModal('quizModal')">×</button>
+    </div>
+
+    <div id="quizContent"></div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* =========================================================
+   DATA
+========================================================= */
+
+const lessons = [
+  {
+    id:"html",
+    category:"HTML",
+    title:"HTML Basics",
+    description:"Learn how webpages are structured.",
+    code:`<h1>My First Website</h1>
+<p>Hello Coder Girl!</p>
+<button>Click Me</button>`,
+    text:`
+      <p>HTML is the structure of a webpage.</p>
+      <p>
+        Headings use <code>&lt;h1&gt;</code>, paragraphs use
+        <code>&lt;p&gt;</code>, and buttons use
+        <code>&lt;button&gt;</code>.
+      </p>
+      <p>
+        Think of HTML as the skeleton of your website.
+      </p>
+    `
+  },
+  {
+    id:"css",
+    category:"CSS",
+    title:"CSS Styling",
+    description:"Make your website beautiful.",
+    code:`.title {
+  color: #39ff88;
+  font-size: 40px;
+}`,
+    text:`
+      <p>CSS controls the appearance of HTML elements.</p>
+      <p>
+        You can change colors, spacing, fonts, borders,
+        layouts and much more.
+      </p>
+      <p>
+        CSS selectors tell the browser which elements to style.
+      </p>
+    `
+  },
+  {
+    id:"js",
+    category:"JAVASCRIPT",
+    title:"JavaScript Basics",
+    description:"Make your website interactive.",
+    code:`const button = document.querySelector("button");
+
+button.addEventListener("click", () => {
+  alert("Hello!");
+});`,
+    text:`
+      <p>JavaScript adds behavior and interaction to webpages.</p>
+      <p>
+        You can respond to clicks, change HTML, update styles,
+        calculate values and create complete applications.
+      </p>
+    `
+  },
+  {
+    id:"dom",
+    category:"JAVASCRIPT",
+    title:"DOM Manipulation",
+    description:"Control webpage elements with JavaScript.",
+    code:`const title =
+  document.querySelector(".title");
+
+title.textContent = "New Title";`,
+    text:`
+      <p>The DOM represents your webpage as objects JavaScript can control.</p>
+      <p>
+        <code>querySelector()</code> lets you select an element,
+        while properties such as <code>textContent</code>
+        let you change it.
+      </p>
+    `
+  }
+];
+
+const challenges = [
+  {
+    id:"css-green",
+    title:"Green Heading",
+    difficulty:"Beginner",
+    xp:30,
+    description:"Make .title text green.",
+    answer:"color",
+    hint:"Use a CSS color property.",
+    secondHint:"The property starts with c and controls text color."
+  },
+  {
+    id:"html-button",
+    title:"Create a Button",
+    difficulty:"Beginner",
+    xp:30,
+    description:"Create a HTML button containing the text Start.",
+    answer:"<button>start</button>",
+    hint:"HTML buttons use an opening and closing button tag.",
+    secondHint:"Your code should contain the word button and Start."
+  },
+  {
+    id:"js-alert",
+    title:"Make an Alert",
+    difficulty:"Beginner",
+    xp:40,
+    description:"Write JavaScript that displays an alert.",
+    answer:"alert",
+    hint:"JavaScript has a built-in function for browser alerts.",
+    secondHint:"The function name starts with 'alert'."
+  }
+];
+
+const projects = [
+  {
+    id:"portfolio",
+    title:"Personal Portfolio",
+    icon:"👩‍💻",
+    requiredXP:0,
+    description:"Build a simple personal portfolio website."
+  },
+  {
+    id:"todo",
+    title:"To-Do App",
+    icon:"✅",
+    requiredXP:100,
+    description:"Create an interactive task manager."
+  },
+  {
+    id:"quiz",
+    title:"Quiz App",
+    icon:"🧠",
+    requiredXP:200,
+    description:"Build a multiple-choice quiz application."
+  },
+  {
+    id:"weather",
+    title:"Weather Dashboard",
+    icon:"🌤️",
+    requiredXP:350,
+    description:"Create a weather interface using an API."
+  }
+];
+
+const badges = [
+  {
+    id:"first",
+    icon:"🌱",
+    name:"First Step",
+    description:"Complete your first lesson.",
+    check:s=>s.completedLessons.length >= 1
+  },
+  {
+    id:"five",
+    icon:"🔥",
+    name:"On Fire",
+    description:"Earn 100 XP.",
+    check:s=>s.xp >= 100
+  },
+  {
+    id:"challenge",
+    icon:"🎯",
+    name:"Challenge Accepted",
+    description:"Complete a coding challenge.",
+    check:s=>s.completedChallenges.length >= 1
+  },
+  {
+    id:"builder",
+    icon:"🚀",
+    name:"Builder",
+    description:"Reach 200 XP.",
+    check:s=>s.xp >= 200
+  },
+  {
+    id:"master",
+    icon:"👑",
+    name:"Code Master",
+    description:"Complete all lessons.",
+    check:s=>s.completedLessons.length >= lessons.length
+  },
+  {
+    id:"streak",
+    icon:"⚡",
+    name:"Consistent Coder",
+    description:"Reach a 7-day streak.",
+    check:s=>s.streak >= 7
+  },
+  {
+    id:"bookmark",
+    icon:"🔖",
+    name:"Collector",
+    description:"Bookmark a lesson.",
+    check:s=>s.bookmarks.length >= 1
+  },
+  {
+    id:"project",
+    icon:"🏗️",
+    name:"Project Builder",
+    description:"Reach 350 XP.",
+    check:s=>s.xp >= 350
+  }
+];
+
+/* =========================================================
+   STATE
+========================================================= */
+
+let state = JSON.parse(localStorage.getItem("coderGirlState")) || {
+  xp:0,
+  completedLessons:[],
+  completedChallenges:[],
+  bookmarks:[],
+  notes:{},
+  streak:0,
+  lastVisit:null,
+  completedProjects:[],
+  quizCompleted:false
+};
+
+let currentLesson = 0;
+
+function saveState(){
+  localStorage.setItem("coderGirlState",JSON.stringify(state));
+  updateUI();
+}
+
+function updateUI(){
+  updateStats();
+  renderPaths();
+  renderLessons();
+  renderChallenges();
+  renderProjects();
+  renderBadges();
+  renderBookmarks();
+  updateNextStep();
+  updateLevel();
+}
+
+function addXP(amount){
+  state.xp += amount;
+  showToast(`+${amount} XP earned! ⭐`);
+  saveState();
+}
+
+/* =========================================================
+   STREAK
+========================================================= */
+
+function updateStreak(){
+  const today = new Date().toISOString().slice(0,10);
+
+  if(!state.lastVisit){
+    state.streak = 1;
+    state.lastVisit = today;
+  }else if(state.lastVisit !== today){
+
+    const previous = new Date(state.lastVisit);
+    const current = new Date(today);
+    const diff = Math.round((current-previous)/(1000*60*60*24));
+
+    if(diff === 1){
+      state.streak++;
+    }else{
+      state.streak = 1;
+    }
+
+    state.lastVisit = today;
+  }
+
+  saveState();
+}
+
+/* =========================================================
+   NAVIGATION
+========================================================= */
+
+function showSection(id,button){
+
+  document.querySelectorAll(".page").forEach(page=>{
+    page.style.display = "none";
+  });
+
+  document.getElementById(id).style.display = "block";
+
+  document.querySelectorAll(".nav button").forEach(btn=>{
+    btn.classList.remove("active");
+  });
+
+  if(button) button.classList.add("active");
+
+  document.getElementById("sidebar").classList.remove("open");
+
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+
+function toggleSidebar(){
+  document.getElementById("sidebar").classList.toggle("open");
+}
+
+/* =========================================================
+   DASHBOARD
+========================================================= */
+
+function updateStats(){
+
+  document.getElementById("xpStat").textContent = state.xp;
+
+  const percentage =
+    Math.round(
+      state.completedLessons.length /
+      lessons.length * 100
+    );
+
+  document.getElementById("lessonStat").textContent =
+    percentage + "%";
+
+  document.getElementById("streakStat").textContent =
+    state.streak;
+
+  document.getElementById("sideStreak").textContent =
+    state.streak + (state.streak === 1 ? " day" : " days");
+
+  const unlocked =
+    badges.filter(b=>b.check(state)).length;
+
+  document.getElementById("badgeStat").textContent =
+    unlocked;
+}
+
+function updateLevel(){
+
+  const level =
+    Math.floor(state.xp / 100) + 1;
+
+  document.getElementById("levelDisplay").textContent =
+    "LEVEL " + level;
+}
+
+function updateNextStep(){
+
+  const next =
+    lessons.find(
+      l=>!state.completedLessons.includes(l.id)
+    );
+
+  if(next){
+
+    document.getElementById("nextTitle").textContent =
+      next.title + " →";
+
+    document.getElementById("nextDescription").textContent =
+      next.description;
+
+  }else{
+
+    document.getElementById("nextTitle").textContent =
+      "You're a coding superstar! 👑";
+
+    document.getElementById("nextDescription").textContent =
+      "All lessons are complete. Start building a project!";
+  }
+}
+
+function continueLearning(){
+
+  const index =
+    lessons.findIndex(
+      l=>!state.completedLessons.includes(l.id)
+    );
+
+  if(index === -1){
+    showSection("projects");
+    return;
+  }
+
+  currentLesson = index;
+  renderLessonContent();
+  showSection("lessons");
+}
+
+function renderPaths(){
+
+  const container =
+    document.getElementById("pathGrid");
+
+  container.innerHTML = lessons.map((lesson,index)=>{
+
+    const done =
+      state.completedLessons.includes(lesson.id);
+
+    return `
+      <div class="card">
+        <div class="card-icon">
+          ${lesson.category === "HTML" ? "🌐" :
+            lesson.category === "CSS" ? "🎨" :
+            "⚡"}
+        </div>
+
+        <h3>${lesson.title}</h3>
+
+        <p>${lesson.description}</p>
+
+        <div class="card-footer">
+          <span class="badge">
+            ${done ? "✓ Completed" : "25 XP"}
+          </span>
+
+          <button class="btn dark"
+            onclick="openLesson(${index})">
+            ${done ? "Review" : "Start"}
+          </button>
+        </div>
+      </div>
+    `;
+
+  }).join("");
+}
+
+/* =========================================================
+   LESSONS
+========================================================= */
+
+function renderLessons(){
+
+  document.getElementById("lessonList").innerHTML =
+    lessons.map((lesson,index)=>{
+
+      const done =
+        state.completedLessons.includes(lesson.id);
+
+      return `
+        <div
+          class="lesson-item ${index===currentLesson?"active":""}"
+          onclick="openLesson(${index})">
+
+          ${done ? "✅" : "📘"} ${lesson.title}
+
+          <small>
+            ${lesson.category}
+          </small>
+        </div>
+      `;
+
+    }).join("");
+
+  renderLessonContent();
+}
+
+function openLesson(index){
+
+  currentLesson = index;
+
+  renderLessonContent();
+
+  showSection("lessons");
+
+  renderLessons();
+}
+
+function renderLessonContent(){
+
+  const lesson = lessons[currentLesson];
+
+  document.getElementById("lessonCategory").textContent =
+    lesson.category;
+
+  document.getElementById("lessonTitle").textContent =
+    lesson.title;
+
+  document.getElementById("lessonText").innerHTML =
+    lesson.text;
+
+  document.getElementById("lessonCode").textContent =
+    lesson.code;
+}
+
+function completeCurrentLesson(){
+
+  const lesson = lessons[currentLesson];
+
+  if(state.completedLessons.includes(lesson.id)){
+    showToast("You already completed this lesson! 💜");
+    return;
+  }
+
+  state.completedLessons.push(lesson.id);
+
+  addXP(25);
+
+  checkAchievements();
+
+  saveState();
+}
+
+function restartLesson(){
+
+  showToast("Lesson restarted. Try explaining the concept in your own words!");
+}
+
+function copyLessonCode(){
+
+  navigator.clipboard.writeText(
+    lessons[currentLesson].code
+  );
+
+  showToast("Code copied! 📋");
+}
+
+/* =========================================================
+   BOOKMARKS
+========================================================= */
+
+function bookmarkCurrentLesson(){
+
+  const id = lessons[currentLesson].id;
+
+  if(state.bookmarks.includes(id)){
+    state.bookmarks =
+      state.bookmarks.filter(x=>x!==id);
+
+    showToast("Bookmark removed.");
+  }else{
+    state.bookmarks.push(id);
+    showToast("Lesson bookmarked 🔖");
+  }
+
+  saveState();
+}
+
+function renderBookmarks(){
+
+  const container =
+    document.getElementById("bookmarkGrid");
+
+  if(!state.bookmarks.length){
+
+    container.innerHTML = `
+      <div class="card">
+        <h3>No bookmarks yet</h3>
+        <p>
+          Bookmark lessons you want to revisit.
+        </p>
+      </div>
+    `;
+
+    return;
+  }
+
+  container.innerHTML =
+    state.bookmarks.map(id=>{
+
+      const lesson =
+        lessons.find(l=>l.id===id);
+
+      const index =
+        lessons.findIndex(l=>l.id===id);
+
+      return `
+        <div class="card">
+          <div class="card-icon">🔖</div>
+          <h3>${lesson.title}</h3>
+          <p>${lesson.description}</p>
+          <button class="btn green"
+            onclick="openLesson(${index})">
+            Open Lesson
+          </button>
+        </div>
+      `;
+
+    }).join("");
+}
+
+/* =========================================================
+   NOTES
+========================================================= */
+
+function openNotes(){
+
+  const id = lessons[currentLesson].id;
+
+  document.getElementById("notesArea").value =
+    state.notes[id] || "";
+
+  document.getElementById("notesModal")
+    .classList.add("show");
+}
+
+function saveNotes(){
+
+  const id = lessons[currentLesson].id;
+
+  state.notes[id] =
+    document.getElementById("notesArea").value;
+
+  saveState();
+
+  closeModal("notesModal");
+
+  showToast("Notes saved 📝");
+}
+
+function closeModal(id){
+  document.getElementById(id).classList.remove("show");
+}
+
+/* =========================================================
+   PLAYGROUND
+========================================================= */
+
+function runCode(){
+
+  const html =
+    document.getElementById("htmlCode").value;
+
+  const css =
+    document.getElementById("cssCode").value;
+
+  const js =
+    document.getElementById("jsCode").value;
+
+  const output = `
+<!DOCTYPE html>
+<html>
+<head>
+<style>${css}</style>
+</head>
+<body>
+${html}
+<script>
+try{
+${js}
+}catch(error){
+console.error(error);
+}
+<\/script>
+</body>
+</html>
+`;
+
+  document.getElementById("preview").srcdoc = output;
+
+  showToast("Code executed ▶");
+}
+
+function resetPlayground(){
+
+  document.getElementById("htmlCode").value =
+`<h1>Hello Coder Girl!</h1>
+<p>I am learning to code.</p>
+<button>Click Me</button>`;
+
+  document.getElementById("cssCode").value =
+`body {
+  font-family: Arial;
+  background: #08080d;
+  color: white;
+  padding: 30px;
+}
+
+.card {
+  border: 2px solid #9b5cff;
+  padding: 25px;
+  border-radius: 20px;
+}
+
+button {
+  background: #39ff88;
+  border: 0;
+  padding: 10px 16px;
+  border-radius: 8px;
+}`;
+
+  document.getElementById("jsCode").value =
+`document.querySelector("button")
+  .addEventListener("click", () => {
+    alert("You did it! 🚀");
+  });`;
+
+  runCode();
+  showToast("Playground reset ↻");
+}
+
+/* =========================================================
+   CHALLENGES
+========================================================= */
+
+function renderChallenges(){
+
+  const container =
+    document.getElementById("challengeGrid");
+
+  container.innerHTML =
+    challenges.map(challenge=>{
+
+      const done =
+        state.completedChallenges.includes(challenge.id);
+
+      return `
+        <div class="card">
+
+          <div class="card-icon">🎯</div>
+
+          <h3>${challenge.title}</h3>
+
+          <span class="badge">
+            ${challenge.difficulty} • ${challenge.xp} XP
+          </span>
+
+          <p>${challenge.description}</p>
+
+          ${
+            done
+            ? `
+              <div class="feedback success"
+                   style="display:block">
+                ✓ Challenge completed
+              </div>
+            `
+            : `
+              <textarea
+                id="challenge-${challenge.id}"
+                placeholder="Write your answer..."
+                style="width:100%;min-height:120px;background:#09090d;color:white;border:1px solid #333;border-radius:10px;padding:12px"
+              ></textarea>
+
+              <br><br>
+
+              <button class="btn green"
+                onclick="checkChallenge('${challenge.id}')">
+                Check
+              </button>
+
+              <button class="btn dark"
+                onclick="showChallengeHint('${challenge.id}',1)">
+                💡 Hint
+              </button>
+
+              <div id="hint-${challenge.id}"></div>
+              <div id="feedback-${challenge.id}"
+                   class="feedback"></div>
+            `
+          }
+
+        </div>
+      `;
+
+    }).join("");
+}
+
+function normalize(value){
+  return value
+    .toLowerCase()
+    .replace(/\s+/g,"")
+    .replace(/;/g,"");
+}
+
+function checkChallenge(id){
+
+  const challenge =
+    challenges.find(c=>c.id===id);
+
+  const input =
+    document.getElementById(
+      "challenge-"+id
+    ).value;
+
+  let correct = false;
+
+  if(id==="css-green"){
+    correct =
+      input.toLowerCase().includes("color") &&
+      input.toLowerCase().includes("green");
+  }
+
+  if(id==="html-button"){
+    correct =
+      input.toLowerCase().includes("<button") &&
+      input.toLowerCase().includes("start");
+  }
+
+  if(id==="js-alert"){
+    correct =
+      input.toLowerCase().includes("alert");
+  }
+
+  const feedback =
+    document.getElementById(
+      "feedback-"+id
+    );
+
+  if(correct){
+
+    feedback.className =
+      "feedback success";
+
+    feedback.textContent =
+      `🎉 Correct! +${challenge.xp} XP`;
+
+    if(!state.completedChallenges.includes(id)){
+      state.completedChallenges.push(id);
+      state.xp += challenge.xp;
+    }
+
+    saveState();
+    checkAchievements();
+
+  }else{
+
+    feedback.className =
+      "feedback error";
+
+    feedback.textContent =
+      "Not quite. Read the hint and try again!";
+  }
+}
+
+function showChallengeHint(id,level){
+
+  const challenge =
+    challenges.find(c=>c.id===id);
+
+  const target =
+    document.getElementById("hint-"+id);
+
+  if(level===1){
+    target.innerHTML =
+      `<div class="hint">💡 ${challenge.hint}</div>`;
+  }else{
+    target.innerHTML +=
+      `<div class="hint">💡 ${challenge.secondHint}</div>`;
+  }
+}
+
+function checkQuickChallenge(){
+
+  const value =
+    document.getElementById("quickChallenge")
+      .value
+      .toLowerCase();
+
+  const feedback =
+    document.getElementById("quickFeedback");
+
+  if(
+    value.includes("color") &&
+    value.includes("green")
+  ){
+
+    feedback.className =
+      "feedback success";
+
+    feedback.textContent =
+      "🎉 Correct! +20 XP";
+
+    if(!state.quickChallenge){
+      state.quickChallenge = true;
+      state.xp += 20;
+      saveState();
+    }
+
+  }else{
+
+    feedback.className =
+      "feedback error";
+
+    feedback.textContent =
+      "Try again. You need the CSS color property.";
+  }
+}
+
+function showHint(level){
+
+  const target =
+    document.getElementById("hint1");
+
+  target.innerHTML =
+    `<div class="hint">
+      💡 CSS uses the <strong>color</strong> property
+      to change text color.
+    </div>`;
+}
+
+/* =========================================================
+   PROJECTS
+========================================================= */
+
+function renderProjects(){
+
+  const container =
+    document.getElementById("projectGrid");
+
+  container.innerHTML =
+    projects.map(project=>{
+
+      const unlocked =
+        state.xp >= project.requiredXP;
+
+      const completed =
+        state.completedProjects.includes(project.id);
+
+      return `
+        <div class="card project-card ${!unlocked?"locked":""}">
+
+          <div class="project-body">
+
+            <div class="card-icon">
+              ${project.icon}
+            </div>
+
+            <h3>${project.title}</h3>
+
+            <p>${project.description}</p>
+
+            ${
+              unlocked
+              ? `<span class="badge">
+                  ${completed?"✓ Completed":"Unlocked"}
+                 </span>`
+              : `<span class="badge">
+                  🔒 Requires ${project.requiredXP} XP
+                 </span>`
+            }
+
+          </div>
+
+          <br>
+
+          ${
+            unlocked
+            ? `
+              <button class="btn green"
+                onclick="startProject('${project.id}')">
+                ${completed?"Open Project":"Start Project →"}
+              </button>
+            `
+            : `
+              <button class="btn dark" disabled>
+                Locked
+              </button>
+            `
+          }
+
+        </div>
+      `;
+
+    }).join("");
+}
+
+function startProject(id){
+
+  const project =
+    projects.find(p=>p.id===id);
+
+  showToast(`${project.title} opened 🚀`);
+
+  const templates = {
+
+    portfolio: `
+<h1>My Portfolio</h1>
+<p>Hi! I'm a Coder Girl.</p>
+<button>Contact Me</button>
+`,
+
+    todo: `
+<h1>My To-Do List</h1>
+<input placeholder="New task">
+<button>Add Task</button>
+<ul></ul>
+`,
+
+    quiz: `
+<h1>Mini Quiz</h1>
+<p>Which language runs in the browser?</p>
+<button>JavaScript</button>
+`,
+
+    weather: `
+<h1>Weather Dashboard</h1>
+<p>Temperature: 28°C</p>
+`
+  };
+
+  document.getElementById("htmlCode").value =
+    templates[id];
+
+  document.getElementById("cssCode").value =
+`body {
+  background:#08080d;
+  color:white;
+  font-family:Arial;
+  padding:30px;
+}
+
+h1 {
+  color:#39ff88;
+}`;
+
+  document.getElementById("jsCode").value =
+`console.log("Build something amazing!");`;
+
+  runCode();
+  showSection("playground");
+
+  if(!state.completedProjects.includes(id)){
+    state.completedProjects.push(id);
+    state.xp += 10;
+    saveState();
+  }
+}
+
+/* =========================================================
+   ACHIEVEMENTS
+========================================================= */
+
+function checkAchievements(){
+
+  const unlocked =
+    badges.filter(b=>b.check(state));
+
+  unlocked.forEach(b=>{
+    if(!state.unlockedBadges){
+      state.unlockedBadges=[];
+    }
+
+    if(!state.unlockedBadges.includes(b.id)){
+      state.unlockedBadges.push(b.id);
+      showToast(`🏆 Badge unlocked: ${b.name}`);
+    }
+  });
+
+  saveState();
+}
+
+function renderBadges(){
+
+  const container =
+    document.getElementById("badgesGrid");
+
+  container.innerHTML =
+    badges.map(badge=>{
+
+      const unlocked =
+        badge.check(state);
+
+      return `
+        <div class="achievement ${unlocked?"unlocked":""}">
+          <div class="emoji">${badge.icon}</div>
+          <strong>${badge.name}</strong>
+          <small>${badge.description}</small>
+        </div>
+      `;
+
+    }).join("");
+}
+
+/* =========================================================
+   QUIZ
+========================================================= */
+
+const quiz = {
+  question:"Which language is mainly used to add interactivity to webpages?",
+  options:["HTML","CSS","JavaScript","SQL"],
+  answer:2,
+  explanation:
+    "JavaScript allows webpages to respond to user actions and dynamically change content."
+};
+
+function openQuiz(){
+
+  const content =
+    document.getElementById("quizContent");
+
+  content.innerHTML = `
+    <h3>${quiz.question}</h3>
+
+    ${quiz.options.map((option,index)=>`
+      <button
+        class="quiz-option"
+        onclick="answerQuiz(${index},this)">
+        ${option}
+      </button>
+    `).join("")}
+
+    <div id="quizExplanation"></div>
+  `;
+
+  document.getElementById("quizModal")
+    .classList.add("show");
+}
+
+function answerQuiz(index,button){
+
+  document.querySelectorAll(".quiz-option")
+    .forEach(b=>b.disabled=true);
+
+  const explanation =
+    document.getElementById("quizExplanation");
+
+  if(index === quiz.answer){
+
+    button.classList.add("correct");
+
+    explanation.innerHTML = `
+      <div class="feedback success"
+           style="display:block">
+        🎉 Correct! +25 XP
+      </div>
+      <p class="explanation">
+        ${quiz.explanation}
+      </p>
+    `;
+
+    if(!state.quizCompleted){
+      state.quizCompleted=true;
+      state.xp +=25;
+      saveState();
+    }
+
+  }else{
+
+    button.classList.add("wrong");
+
+    document.querySelectorAll(".quiz-option")
+      [quiz.answer]
+      .classList.add("correct");
+
+    explanation.innerHTML = `
+      <div class="feedback error"
+           style="display:block">
+        Not quite — the correct answer is JavaScript.
+      </div>
+      <p class="explanation">
+        ${quiz.explanation}
+      </p>
+    `;
+  }
+
+  checkAchievements();
+}
+
+/* =========================================================
+   THREE-DOT MENU
+========================================================= */
+
+document.addEventListener("contextmenu",e=>{
+  if(e.target.closest(".lesson-content")){
+    e.preventDefault();
+    openFeatureMenu(e.clientX,e.clientY);
+  }
+});
+
+function openFeatureMenu(x,y){
+
+  const menu =
+    document.getElementById("featureMenu");
+
+  menu.style.left =
+    Math.min(x,window.innerWidth-230)+"px";
+
+  menu.style.top =
+    Math.min(y,window.innerHeight-280)+"px";
+
+  menu.classList.add("show");
+}
+
+document.addEventListener("click",e=>{
+
+  const menu =
+    document.getElementById("featureMenu");
+
+  if(!e.target.closest("#featureMenu")){
+    menu.classList.remove("show");
+  }
+});
+
+/* =========================================================
+   TOAST
+========================================================= */
+
+let toastTimer;
+
+function showToast(message){
+
+  const toast =
+    document.getElementById("toast");
+
+  toast.textContent = message;
+
+  toast.classList.add("show");
+
+  clearTimeout(toastTimer);
+
+  toastTimer =
+    setTimeout(()=>{
+      toast.classList.remove("show");
+    },2500);
+}
+
+/* =========================================================
+   INITIALIZATION
+========================================================= */
+
+function init(){
+
+  updateStreak();
+
+  updateUI();
+
+  runCode();
+
+  checkAchievements();
+
+  /*
+    Add a quiz shortcut to the dashboard.
+  */
+  const section =
+    document.querySelector("#dashboard .section:last-child");
+
+  const quizCard = document.createElement("div");
+
+  quizCard.className = "section";
+
+  quizCard.innerHTML = `
+    <div class="section-head">
+      <div>
+        <h2>Knowledge Check 🧠</h2>
+        <p>Test yourself after learning.</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>Ready for a quick quiz?</h3>
+      <p>
+        Answer one question and earn XP.
+      </p>
+      <button class="btn green" onclick="openQuiz()">
+        Start Quiz →
+      </button>
+    </div>
+  `;
+
+  document.getElementById("dashboard")
+    .appendChild(quizCard);
+}
+
+init();
+</script>
+
+</body>
+</html>
